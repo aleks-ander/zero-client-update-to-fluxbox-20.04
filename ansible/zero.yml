@@ -260,7 +260,6 @@
           owner: zero
           group: zero
       notify: "reboot"
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
       
     - name: get chromium.pref
       get_url:
@@ -269,8 +268,7 @@
           force: yes
           owner: zero
           group: zero
-      notify: "reboot"     
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'      
+      notify: "reboot"           
                 
     - name: remove chromium snap residuals
       command: apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra -y
@@ -285,13 +283,13 @@
       command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A
 
     - name: add debian repo keys
-      command: apt-key export 77E11517 | sudo gpg --dearmour -o /usr/share/keyrings/debian-buster.gpg
+      shell: apt-key export 77E11517 | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-buster.gpg
 
     - name: add debian repo keys
-      command: apt-key export 22F3D138 | sudo gpg --dearmour -o /usr/share/keyrings/debian-buster-updates.gpg
+      shell: apt-key export 22F3D138 | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-buster-updates.gpg
 
     - name: add debian repo keys
-      command: apt-key export E562B32A | sudo gpg --dearmour -o /usr/share/keyrings/debian-security-buster.gpg
+      shell: apt-key export E562B32A | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-security-buster.gpg
 
     - name: Update apt cache
       apt:
