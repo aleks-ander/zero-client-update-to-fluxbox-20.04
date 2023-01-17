@@ -293,11 +293,14 @@
     - name: add debian repo keys
       command: apt-key export E562B32A | sudo gpg --dearmour -o /usr/share/keyrings/debian-security-buster.gpg
 
-    - name: add debian repo keys
-      command: sudo apt update
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        force_apt_get: true
 
-    - name: add debian repo keys
-      command: apt install chromium -y
+    - name: Install Chromium for Parsec from Debian Repo
+      apt:
+        name: chromium 
             
     - name: Install Parsec
       apt:
