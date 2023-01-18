@@ -133,16 +133,7 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
-      
-    - name: get ubuntu-light.png
-      get_url:
-        url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/wp.jpg
-        dest: /usr/share/images/fluxbox/ubuntu-light.png
-        force: yes
-        owner: zero
-        group: zero
-      notify: "reboot"  
+      notify: "reboot" 
 
     # INSTALL PULSEAUDIO
     - name: install PulseAudio
@@ -306,3 +297,12 @@
       apt:
         deb: https://builds.parsecgaming.com/package/parsec-linux.deb
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
+
+    - name: get ubuntu-light.png
+      get_url:
+        url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/wp.jpg
+        dest: /usr/share/images/fluxbox/ubuntu-light.png
+        force: yes
+        owner: zero
+        group: zero
+      notify: "reboot" 
