@@ -240,9 +240,13 @@
       
     - name: Install additional packets missing after update to 20.04
       apt:
-          name:
-            - xserver-xorg-video-fbdev
-            - xserver-xorg-video-vesa
+          name: xserver-xorg-video-fbdev
+          state: present
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
+      
+    - name: Install additional packets missing after update to 20.04
+      apt:
+          name: xserver-xorg-video-vesa
           state: present
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
       
