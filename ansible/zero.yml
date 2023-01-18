@@ -276,7 +276,7 @@
     - name: Install Parsec
       apt:
         deb: https://builds.parsecgaming.com/package/parsec-linux.deb
-        state: latest
+        state: present
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
 
     - name: get ubuntu-light.png
