@@ -9,10 +9,6 @@
       command: reboot
 
     tasks:
-    
-    #Fix Broken Install
-    - name: FIX BROKEN INSTALL
-      shell: apt-get --fix-broken install
       
     # CONFIGURE AND UPDATE APT
     - name: Update apt cache
@@ -212,7 +208,7 @@
       notify: "reboot"      
 
     - name: Run do-release-upgrade non-interactively.
-      command: do-release-upgrade -f DistUpgradeViewNonInteractive
+      shell: do-release-upgrade -f DistUpgradeViewNonInteractive
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
       
     - name: Remove chromium
