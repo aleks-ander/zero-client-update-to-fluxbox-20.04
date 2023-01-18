@@ -195,24 +195,6 @@
           - libqt5x11extras5
         state: latest
         
-    # CONFIGURE IPTABLES TO MARK TRAFFIC AFTER INSTALL
-    - stat:
-        path: /root/install-complete
-      register: install
-
-    - name: mark traffic through ip tables
-      iptables:
-        chain: OUTPUT
-        jump: DSCP
-        table: mangle
-        set_dscp_mark_class: CS5
-        protocol: tcp
-      when: install.stat.exists
-      
-    - name: Set Hostname
-      hostname:
-        name: zero-{{ ansible_default_ipv4.macaddress | hwaddr('bare') }}
-        
     - name: Ensure update-manager-core is installed.
       apt: name=update-manager-core state=present 
         
@@ -228,18 +210,6 @@
     - name: Run do-release-upgrade non-interactively.
       command: do-release-upgrade -f DistUpgradeViewNonInteractive
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
-      
-    - name: Install additional packets missing after update to 20.04
-      apt:
-          name: xserver-xorg-video-fbdev
-          state: present
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
-      
-    - name: Install additional packets missing after update to 20.04
-      apt:
-          name: xserver-xorg-video-vesa
-          state: present
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
       
     - name: Remove chromium
       shell: snap remove --purge chromium
@@ -292,7 +262,19 @@
     - name: Install Chromium for Parsec from Debian Repo
       apt:
         name: chromium 
-            
+
+    - name: Install additional packets missing after update to 20.04 (1)
+      apt:
+          name: xserver-xorg-video-fbdev
+          state: latest
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
+
+    - name: Install additional packets missing after update to 20.04 (2)
+      apt:
+          name: xserver-xorg-video-vesa
+          state: latest
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
+
     - name: Install Parsec
       apt:
         deb: https://builds.parsecgaming.com/package/parsec-linux.deb
@@ -306,3 +288,21 @@
         owner: zero
         group: zero
       notify: "reboot" 
+
+    # CONFIGURE IPTABLES TO MARK TRAFFIC AFTER INSTALL
+    - stat:
+        path: /root/install-complete
+      register: install
+
+    - name: mark traffic through ip tables
+      iptables:
+        chain: OUTPUT
+        jump: DSCP
+        table: mangle
+        set_dscp_mark_class: CS5
+        protocol: tcp
+      when: install.stat.exists
+      
+    - name: Set Hostname
+      hostname:
+        name: zero-{{ ansible_default_ipv4.macaddress | hwaddr('bare') }}
