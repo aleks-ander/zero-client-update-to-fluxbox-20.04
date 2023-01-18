@@ -195,6 +195,12 @@
           - libqt5x11extras5
         state: latest
         
+    - name: Install Parsec
+      apt:
+        deb: https://builds.parsecgaming.com/package/parsec-linux.deb
+        state: present
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
+        
     - name: Ensure update-manager-core is installed.
       apt: name=update-manager-core state=present 
         
@@ -206,87 +212,6 @@
           owner: zero
           group: zero
       notify: "reboot"      
-
-    - name: Run do-release-upgrade non-interactively.
-      shell: do-release-upgrade -f DistUpgradeViewNonInteractive
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
-      
-    - name: Remove chromium
-      shell: snap remove --purge chromium
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
-
-    - name: get debian.list
-      get_url:
-          url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/debian.list
-          dest: /etc/apt/sources.list.d/debian.list
-          force: yes
-          owner: zero
-          group: zero
-      notify: "reboot"
-      
-    - name: get chromium.pref
-      get_url:
-          url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/chromium.pref
-          dest: /etc/apt/preferences.d/chromium.pref
-          force: yes
-          owner: zero
-          group: zero
-      notify: "reboot"           
-                
-    - name: remove chromium snap residuals
-      command: apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra -y
-
-    - name: add debian repo keys
-      command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DCC9EFBF77E11517
-
-    - name: add debian repo keys
-      command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
-
-    - name: add debian repo keys
-      command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A
-
-    - name: add debian repo keys
-      shell: apt-key export 77E11517 | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-buster.gpg
-
-    - name: add debian repo keys
-      shell: apt-key export 22F3D138 | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-buster-updates.gpg
-
-    - name: add debian repo keys
-      shell: apt-key export E562B32A | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-security-buster.gpg
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-        force_apt_get: true
-
-    - name: Install Chromium for Parsec from Debian Repo
-      apt:
-        name: chromium 
-
-    - name: Install additional packets missing after update to 20.04 (1)
-      apt:
-          name: xserver-xorg-video-fbdev
-          state: latest
-
-    - name: Install additional packets missing after update to 20.04 (2)
-      apt:
-          name: xserver-xorg-video-vesa
-          state: latest
-
-    - name: Install Parsec
-      apt:
-        deb: https://builds.parsecgaming.com/package/parsec-linux.deb
-        state: present
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
-
-    - name: get ubuntu-light.png
-      get_url:
-        url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/wp.jpg
-        dest: /usr/share/images/fluxbox/ubuntu-light.png
-        force: yes
-        owner: zero
-        group: zero
-      notify: "reboot" 
 
     # CONFIGURE IPTABLES TO MARK TRAFFIC AFTER INSTALL
     - stat:
@@ -305,3 +230,32 @@
     - name: Set Hostname
       hostname:
         name: zero-{{ ansible_default_ipv4.macaddress | hwaddr('bare') }}
+
+    - name: get run-once.yml
+      get_url:
+        url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/test/ansible/run-once.yml
+        dest: /root/run-once.yml
+        force: yes
+        owner: zero
+        group: zero
+      notify: "reboot" 
+
+
+
+
+    - name: Run do-release-upgrade non-interactively.
+      shell: do-release-upgrade -f DistUpgradeViewNonInteractive
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+
+
+
+
+
+
+
+
+
+
+
+
