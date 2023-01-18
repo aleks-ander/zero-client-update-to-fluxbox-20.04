@@ -9,7 +9,11 @@
       command: reboot
 
     tasks:
-
+    
+    #Fix Broken Install
+    - name: FIX BROKEN INSTALL
+      shell: apt-get --fix-broken install
+      
     # CONFIGURE AND UPDATE APT
     - name: Update apt cache
       apt:
