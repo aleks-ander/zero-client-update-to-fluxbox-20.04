@@ -35,7 +35,7 @@
 
     # Remove Openbox
     - name: Remove "openbox" package
-      ansible.builtin.apt:
+      apt:
         name: openbox
         state: absent
 
@@ -247,9 +247,7 @@
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
       
     - name: Remove chromium
-      snap:
-          name: chromium
-          state: absent
+      shell: snap remove --purge chromium
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
 
     - name: get debian.list
