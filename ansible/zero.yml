@@ -271,17 +271,16 @@
       apt:
           name: xserver-xorg-video-fbdev
           state: latest
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
 
     - name: Install additional packets missing after update to 20.04 (2)
       apt:
           name: xserver-xorg-video-vesa
           state: latest
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
 
     - name: Install Parsec
       apt:
         deb: https://builds.parsecgaming.com/package/parsec-linux.deb
+        state: latest
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
 
     - name: get ubuntu-light.png
