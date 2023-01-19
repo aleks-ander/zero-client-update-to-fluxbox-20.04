@@ -223,8 +223,8 @@
         url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/test/ansible/run-once.yml
         dest: /root/run-once.yml
         force: yes
-        owner: zero
-        group: zero 
+        owner: root
+        group: root 
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 
     - name: get ansible cron
@@ -232,8 +232,8 @@
         url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/test/ansible/ansible-cron.sh
         dest: /etc/cron.hourly/ansible
         force: yes
-        owner: zero
-        group: zero 
+        owner: root
+        group: root 
         mode: a+x
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 
