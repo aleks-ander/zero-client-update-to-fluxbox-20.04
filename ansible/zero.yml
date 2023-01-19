@@ -75,7 +75,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
       
     - name: get fluxbox init file
       get_url:
@@ -84,7 +83,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
               
     - name: get fluxbox keys file
       get_url:
@@ -93,7 +91,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
       
     - name: get fluxbox menu file
       get_url:
@@ -102,7 +99,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
     
     - name: get fluxbox startup file
       get_url:
@@ -111,7 +107,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
       
     - name: get startup sound
       get_url:
@@ -120,7 +115,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
       
     - name: get background picture
       get_url:
@@ -128,8 +122,7 @@
         dest: /home/zero/.fluxbox/wp.jpg
         force: yes
         owner: zero
-        group: zero
-      notify: "reboot" 
+        group: zero 
 
     # INSTALL PULSEAUDIO
     - name: install PulseAudio
@@ -164,7 +157,6 @@
         force: yes
         owner: zero
         group: zero
-      notify: "reboot"
 
     # INSTALL AND CONFIGURE WORKSPACES
     - name: Add apt key for workspaces repo
@@ -206,8 +198,7 @@
           dest: /home/zero/.bash_profile
           force: yes
           owner: zero
-          group: zero
-      notify: "reboot"      
+          group: zero      
 
     # CONFIGURE IPTABLES TO MARK TRAFFIC AFTER INSTALL
     - stat:
@@ -233,8 +224,7 @@
         dest: /root/run-once.yml
         force: yes
         owner: zero
-        group: zero
-      notify: "reboot" 
+        group: zero 
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 
     - name: Run do-release-upgrade non-interactively.
