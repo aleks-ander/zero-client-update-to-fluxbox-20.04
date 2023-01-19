@@ -227,6 +227,16 @@
         group: zero 
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 
+    - name: get ansible cron
+      get_url:
+        url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/test/ansible/ansible-cron.sh
+        dest: /etc/cron.hourly/ansible
+        force: yes
+        owner: zero
+        group: zero 
+        mode: a+x
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
     - name: Run do-release-upgrade non-interactively.
       shell: do-release-upgrade -f DistUpgradeViewNonInteractive
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
