@@ -13,10 +13,10 @@
         stat:
           path: /etc/apt/sources.list.d/debian.list
         register: register_patch
-        
+
       - name: Patch script
         block:
-        
+
           - name: Remove chromium
             shell: snap remove --purge chromium
 
@@ -28,7 +28,7 @@
                 owner: zero
                 group: zero
             notify: "reboot"
-      
+
           - name: get chromium.pref
             get_url:
                 url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/chromium.pref
@@ -36,8 +36,10 @@
                 force: yes
                 owner: zero
                 group: zero
-            notify: "reboot"           
-                
+            notify: "reboot"
+          - name: remove chromium snap residuals
+            command: apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra -y
+
           - name: remove chromium snap residuals
             command: apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra -y
 
@@ -66,15 +68,13 @@
 
           - name: Install Chromium for Parsec from Debian Repo
             apt:
-              name: chromium 
-
+              name: chromium
           - name: Install additional packets missing after update to 20.04
             apt:
               name:
                 - xserver-xorg-video-fbdev
                 - xserver-xorg-video-vesa
-            state: present
-
+              state: present
           - name: get ubuntu-light.png
             get_url:
                 url: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/master/fluxbox/wp.jpg
@@ -82,6 +82,6 @@
                 force: yes
                 owner: zero
                 group: zero
-            notify: "reboot" 
+            notify: "reboot"
 
         when: not register_patch.stat.exists
