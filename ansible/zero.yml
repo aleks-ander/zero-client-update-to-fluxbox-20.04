@@ -4,10 +4,6 @@
     connection: local
     gather_facts: yes
 
-    handlers:
-    - name: reboot
-      command: reboot
-
     tasks:
       
     # CONFIGURE AND UPDATE APT
@@ -239,9 +235,7 @@
         owner: zero
         group: zero
       notify: "reboot" 
-
-
-
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 
     - name: Run do-release-upgrade non-interactively.
       shell: do-release-upgrade -f DistUpgradeViewNonInteractive
