@@ -201,7 +201,9 @@
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
         
     - name: Ensure update-manager-core is installed.
-      apt: name=update-manager-core state=present 
+      apt: 
+        name: update-manager-core 
+        state: present 
         
     - name: get .bash_profile
       get_url:
