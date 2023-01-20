@@ -172,6 +172,15 @@
         filename: amazon-workspaces-clients
         update_cache: yes
         state: present
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
+
+    - name: Add workspaces repo
+      apt_repository:
+        repo: deb [arch=amd64] https://d3nt0h4h6pmmc4.cloudfront.net/ubuntu focal main
+        filename: amazon-workspaces-clients
+        update_cache: yes
+        state: present
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
 
     - name: Install workspaces
       apt:
