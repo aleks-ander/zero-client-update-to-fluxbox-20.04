@@ -18,9 +18,9 @@
         register: register_patch
         
        - name: Checking if this is a new or updated station
-        stat:
-          path: /home/zero/.config/openbox
-        register: register_update   
+         stat:
+           path: /home/zero/.config/openbox
+         register: register_update   
 
       - name: Patch script
         block:
