@@ -69,6 +69,29 @@
           - name: add debian repo keys
             shell: apt-key export E562B32A | sudo gpg --batch --yes --dearmour -o /usr/share/keyrings/debian-security-buster.gpg
 
+
+          
+#         - name: Add apt key for debian chromium repo
+#           apt_key:
+#             keyserver: keyserver.ubuntu.com
+#.            id: DCC9EFBF77E11517
+#             keyring: /usr/share/keyrings/debian-buster.gpg
+#             state: present
+
+#         - name: Add apt key for debian chromium repo
+#           apt_key:
+#             keyserver: keyserver.ubuntu.com
+#.            id: 648ACFD622F3D138
+#             keyring: /usr/share/keyrings/debian-buster-updates.gpg
+#             state: present
+
+#         - name: Add apt key for debian chromium repo
+#           apt_key:
+#             keyserver: keyserver.ubuntu.com
+#.            id: 112695A0E562B32A
+#             keyring: /usr/share/keyrings/debian-security-buster.gpg
+#             state: present
+
           - name: Update apt cache
             apt:
               update_cache: yes
