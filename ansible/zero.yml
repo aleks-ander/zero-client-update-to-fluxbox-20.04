@@ -201,9 +201,11 @@
         state: present
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
         
-    - name: Ensure update-manager-core is installed.
+    - name: Ensure gnupg and update-manager-core is installed.
       apt: 
-        name: update-manager-core 
+        name: 
+          - update-manager-core
+          - gnupg
         state: present 
         
     - name: get .bash_profile
@@ -231,15 +233,6 @@
     - name: Set Hostname
       hostname:
         name: zero-{{ ansible_default_ipv4.macaddress | hwaddr('bare') }}
-
-    - name: get run-once.yml
-      get_url:
-        url: "{{gitpath}}ansible/run-once.yml"
-        dest: /root/run-once.yml
-        force: yes
-        owner: root
-        group: root 
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
 
     - name: get ansible cron
       get_url:
