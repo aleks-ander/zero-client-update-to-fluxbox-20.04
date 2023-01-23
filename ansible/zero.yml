@@ -221,10 +221,23 @@
         set_dscp_mark_class: CS5
         protocol: tcp
       when: install.stat.exists
-      
+
+    # CONFIGURE DHCP
+    - name: configure DHCP 
+      lineinfile:
+        path: /etc/netplan/01-netcfg.yaml
+        line: '      dhcp-identifier: mac'
+
+    # CONFIGURE HOST NAME
     - name: Set Hostname
       hostname:
         name: zero-{{ ansible_default_ipv4.macaddress | hwaddr('bare') }}
+
+    - name: mark installation complete
+      file:
+        path: /root/install-complete
+        state: touch
+      when: not install.stat.exists
 
     - name: get ansible cron
       get_url:
