@@ -139,17 +139,10 @@
           - libasound2
         state: latest
 
-      # INSTALL ZERO REQUIREMENTS
-    - name: install other required packages for openbox config
-      apt:
-        name:
-          - xterm
-          - nodejs
-        state: latest
-
     - name: Ensure gnupg and update-manager-core is installed.
       apt: 
         name: 
+          - xterm
           - update-manager-core
           - gnupg
         state: present 
