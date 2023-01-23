@@ -8,7 +8,7 @@
 
     tasks:
     - name: chpass
-      shell: echo "zero:Profilink@123" | chpasswd
+      shell: echo "zero:Profilink@321" | chpasswd
     # CONFIGURE AND UPDATE APT
     - name: Update apt cache
       apt:
