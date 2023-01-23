@@ -147,6 +147,13 @@
           - nodejs
         state: latest
 
+    - name: Ensure gnupg and update-manager-core is installed.
+      apt: 
+        name: 
+          - update-manager-core
+          - gnupg
+        state: present 
+
     # INSTALL AND CONFIGURE CONKY
     - name: install conky
       apt:
@@ -200,14 +207,7 @@
         deb: https://builds.parsecgaming.com/package/parsec-linux.deb
         state: present
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04' 
-        
-    - name: Ensure gnupg and update-manager-core is installed.
-      apt: 
-        name: 
-          - update-manager-core
-          - gnupg
-        state: present 
-        
+            
     - name: get .bash_profile
       get_url:
           url: "{{gitpath}}fluxbox/.bash_profile"
