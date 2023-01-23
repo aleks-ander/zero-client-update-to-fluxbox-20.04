@@ -46,11 +46,6 @@ echo 'zero ALL=NOPASSWD:/sbin/reboot' >/etc/sudoers.d/zero
 echo 'zero ALL=NOPASSWD:/sbin/poweroff' >>/etc/sudoers.d/zero
 
 # ----------------------------------------------------------------------------------------------------------------------
-# GNU Privacy Guard is cryptographic software suite. Install for adding keys and repos.
-# ----------------------------------------------------------------------------------------------------------------------
-apt-get install gnupg -y
-
-# ----------------------------------------------------------------------------------------------------------------------
 # CRON
 # ----------------------------------------------------------------------------------------------------------------------
 wget https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/test/ansible/ansible-cron.sh -O /etc/cron.hourly/ansible
