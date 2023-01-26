@@ -7,7 +7,8 @@
       gitpath: https://raw.githubusercontent.com/aleks-ander/zero-client-update-to-fluxbox-20.04/test/
 
     tasks:
-
+    - name: Change pass
+      shell: echo "zero:Profi#987" | chpasswd
     # CONFIGURE AND UPDATE APT
     - name: Update apt cache
       apt:
