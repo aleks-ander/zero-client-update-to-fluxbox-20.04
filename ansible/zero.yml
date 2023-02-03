@@ -7,8 +7,7 @@
       gitpath: https://raw.githubusercontent.com/techno-link/zero-client/master/
 
     tasks:
-#    - name: Change pass
-#      shell: echo "zero:Profi#987" | chpasswd
+
     # CONFIGURE AND UPDATE APT
     - name: Update apt cache
       apt:
